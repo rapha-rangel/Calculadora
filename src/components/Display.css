@@ -1,0 +1,19 @@
+.display {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    text-align: right;
+    border: 1px solid rgb(22, 22, 22);
+    background-color:rgb(22, 22, 22);
+    color: greenyellow
+}
+
+.displayCount {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5px;
+    text-align: right;
+    border: 1px solid rgb(22, 22, 22);
+    background-color:rgb(22, 22, 22);
+    color: rgb(255, 255, 88)
+}
