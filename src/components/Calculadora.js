@@ -7,18 +7,16 @@ import Teclado from "./Teclado";
 const Calculadora = () =>{
     const [oldNum, setOldNum] = useState("0");
     const [num, setNum] = useState("0");
-    const [operação, setOperação] = useState(" ");
+    const [operacao, setOperacao] = useState(" ");
     const [operado, setOperado] = useState(false);
-    const [result, setResult] =useState(0);
     
     function handleClick(e){
         const item = e.target.value;
         if(num === "0"){
             setNum(item)
-        }else if (operação==="" && operado){
+        }else if (operacao==="" && operado){
             setNum(item)
             setOldNum("0")
-            setResult("0")
             setOperado(false)
             console.log(num)
         } else if(num!=="0" && operado){
@@ -33,73 +31,81 @@ const Calculadora = () =>{
         function clear(){
             setOldNum("0")
             setNum("0")
-            setResult("0")
             setOperado(false)
         }
 
-        function backspace(e){
-                if(e.keyCode === 8){
-                    console.log('You must have pressed Enter ')
-                    if(num.length ===1){
-                        setNum("0")
-                        setResult("0")
-                        setOldNum("0")
-                        setOperado(false)
-                    } else {
-                        setNum(num.slice(0,num.length-1))
-                    }
-                }
+        function porcentagem(){
+            const porcem = parseFloat(num)/100
+                setNum(String(porcem))
+                setOldNum("0")
+                setOperado(true)
+        }
+        
+        function menosemais(){
+            const result = parseFloat(num) * -1
+            setNum(String(result))
+            setOperado(true) 
+        }
+
+        function fracao(){
+            if(num.includes(".")){
+                
+            }else {
+                const result = num+"."
+                setNum(result)
             }
-            
+        }
+
         function operadores(e){
             if(!operado){
-            const itemOperação = e.target.value;
-            setOperação(itemOperação)
+            const itemOperacao = e.target.value;
+            setOperacao(itemOperacao)
             setOldNum(num)
             setNum("0")
-            setResult(num+itemOperação)
             console.log(oldNum)
-            console.log(operação)
+            console.log(operacao)
             } else{
-                const itemOperação = e.target.value;
-                setOperação(itemOperação)
-                setOldNum(result)
-                setResult(result+itemOperação)
+                const itemOperacao = e.target.value;
+                setOperacao(itemOperacao)
+                setOldNum(num)
                 setNum("0")
-                console.log(operação)
+                console.log(operacao)
                 console.log(num)
                 }
             
         }
 
         function calcular(){
-            switch(operação){
+            switch(operacao){
                 case("+"):
-                const resultSoma =Number(oldNum) + Number(num)
-                setResult(String(resultSoma))
+                const resultSoma =parseFloat(oldNum) + parseFloat(num)
                 setNum(String(resultSoma))
                 setOperado(true)
-                setOperação("")
-                console.log(operação)
+                setOperacao("")
+                console.log(oldNum)
+                console.log(num)
+                console.log(operacao)
                 console.log(operado)
                 break;
                 case("-"):
-                const resultSubtração =Number(oldNum) - Number(num)
-                setResult(String(resultSubtração))
+                const resultSubtracao =parseFloat(oldNum) - parseFloat(num)
+                setNum(String(resultSubtracao))
                 setOperado(true)
-                setOperação("")
+                setOperacao("")
                 break;
                 case("*"):
-                const resultMultiplicação =Number(oldNum) * Number(num)
-                setResult(String(resultMultiplicação))
+                const resultMultiplicacao =parseFloat(oldNum) * parseFloat(num)
+                setNum(String(resultMultiplicacao))
                 setOperado(true)
-                setOperação("")
+                setOperacao("")
                 break;
                 case("/"):
-                const resultDivisão =Number(oldNum) / Number(num)
-                setResult(String(resultDivisão))
+                const resultDivisao =parseFloat(oldNum) / parseFloat(num)
+                setNum(String(resultDivisao))
                 setOperado(true)
-                setOperação("")
+                setOperacao("")
+                break;
+                default:
                 break;
             }
         }
@@ -107,9 +113,9 @@ const Calculadora = () =>{
 
   
     return(
-        <div className="box-border h-120 w-80 p-4  m-auto bg-zinc-900 rounded-md" onKeyDown={backspace}>
-            <Display display={num}  result={result}/>
-            <Teclado handleClick={handleClick} handleClear={clear} handleKeyDown={backspace} handleOperadores={operadores} handleCalcular={calcular}/>
+        <div className="box-border h-120 w-80 p-4 pb-0 m-auto bg-zinc-900 rounded-md">
+            <Display display={num}/>
+            <Teclado handleClick={handleClick} handleFracao={fracao} handleMaisMenos={menosemais} handleClear={clear} handlePorcentagem={porcentagem} handleOperadores={operadores} handleCalcular={calcular}/>
             
         </div>
     )
