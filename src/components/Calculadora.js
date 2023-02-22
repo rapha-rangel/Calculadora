@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import Display from "./Display";
-import "./Calculadora.css";
 import Teclado from "./Teclado";
 
 const Calculadora = () =>{
